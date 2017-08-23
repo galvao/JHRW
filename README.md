@@ -1,9 +1,4 @@
 # JHRW - JavaScript HTTP Request Wrapper
-#### IMPORTANT
----
-This code is under heavy development. 
-The documentation below is incomplete, needs corrections and there's at least one unintended behavior for this code.
----
 A wrapper for so-called "AJAX" Requests
 
 ## Goals
@@ -23,20 +18,25 @@ Object JHRW(String destination [, Boolean lazyExecution = false]);
 * `String destination` - The request's target
 * `Boolean lazyExecution`(optional) - If the request should be initialized and sent right after instantiation
 
-### Return
-A JHRW Object containing:
+### Throws
+A `new Error` if the destination parameter is `undefined`
+
+### Returns
+An Object containing:
 
 #### Properties
-* config
-	* URI
-	* asynchronous
-	* verb
-	* data
-	* requestHeaders
-	* responseType
-	* handler
-	* attempts
-	* attemptInterval
+* request - The `XMLHttpRequest` Object
+* config - The configuration Object
+	* URI - The re'uest's target
+	* asynchronous - If the request should be asynchronous
+	* verb - The HTTP verb
+	* data - Data to be sent along with the request
+	* requestHeaders - HTTP headers for the request
+	* responseType - Expected MIME type of the response
+	* handlers - Object containing the functions to handle the request
+	* attempts - Number of attempts to retry the request
+	* attemptInterval - Interval between attempts
+* availableHandlers - Which handlers can be set
 
 #### Methods
 ##### configure
@@ -45,7 +45,7 @@ Overwrites one or more configuration options (see the config object above)
 Undefined configure(Object configureObject);
 ```
 ##### init
-Initializes the request: Sets the request's MIME Type; Sets the handlers; Opens the request; Sets the request's headers.
+Initializes the request: Sets the expected response MIME Type; Sets the handlers as listeners; Opens the request; Sets the request's headers.
 ```JavaScript
 Undefined init();
 ```
