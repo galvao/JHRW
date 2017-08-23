@@ -54,7 +54,18 @@ function JHRW(destination, lazyExecution)
                 throw new ReferenceError(c + " is not a config attribute.\nAccepted config attributes:\n" + configList);
             }
 
-            this.config[c] = configureObject[c];
+            if (c === 'handlers') {
+                for (let handler in configureObject.handlers) {
+                    if (this.availableHandlers.includes(handler) === false) {
+                        let handlerList = this.availableHandlers.join("\n");
+                        throw new ReferenceError('Invalid handler type: ' + handler + "\nAvailable handlers:\n" + handlerList);
+                    }
+
+                    this.config.handlers[handler] = configureObject.handlers[handler];
+                }
+            } else {
+                this.config[c] = configureObject[c];
+            }
         }
 
         return;
@@ -64,11 +75,6 @@ function JHRW(destination, lazyExecution)
         this.request.overrideMimeType(this.config.responseType);
 
         for (let handler in this.config.handlers) {
-            if (this.availableHandlers.includes(handler) === false) {
-                let handlerList = this.availableHandlers.join("\n");
-                throw new ReferenceError('Invalid handler type: ' + handler + "\nAvailable handlers:\n" + handlerList);
-            }
-
             this.request.addEventListener(handler, this.config.handlers[handler]);
         }
 
