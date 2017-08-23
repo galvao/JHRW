@@ -15,7 +15,8 @@ function JHRW(destination, lazyExecution)
         throw new Error('Destination is a required parameter.');
     }
 
-    this.lazy = typeof lazyExecution === 'undefined' ? false : lazyExecution;
+    lazyExecution = typeof lazyExecution !== 'boolean' ? false : lazyExecution;
+
     this.availableHandlers = [
         'loadstart', 
         'progress', 
