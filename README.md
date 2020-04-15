@@ -1,5 +1,5 @@
 <p align="center">
-	<img src="media/logo.png" width="200">
+    <img src="media/logo.png" width="200">
 </p>
 
 # JHRW - JavaScript HTTP Request Wrapper
@@ -10,9 +10,9 @@ I've made JHRW to:
 
 * Advance my JavaScript skills;
 * Improve/Simplify the usage of the [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) object by:
-	* Adding default values to what's undefined;
-	* Adding additional Error checking and clarification;
-	* Adding interesting, simplified, feature, such as timeouts and retries.
+    * Adding default values to what's undefined;
+    * Adding additional Error checking and clarification;
+    * Adding interesting, simplified, feature, such as timeouts and retries.
 
 ## Documentation
 ```JavaScript
@@ -26,10 +26,12 @@ Object JHRW(String base, String urlPath [, Boolean lazyExecution = false [, Bool
 * `Boolean bypassCache`(optional) - If the request URL should have a timed parameter added in order to bypass cache. Default: false
 
 ### Throws
-* A `Error` 
+* A `ReferenceError`
+    * If there's no JHRWHandler function defined.
+* A `Error`
 	* if the base parameter is `undefined`
 	* if the urlPath parameter is `undefined`
-* A `TypeError` 
+* A `TypeError`
 	* if the base parameter is not a `String`
 	* if the urlPath parameter is not a `String`
 	* if the lazyExecution parameter is not a `Boolean`
@@ -98,16 +100,16 @@ or
 ```JavaScript
 try {
 	var req = new JHRW('http://localhost', 'foo.php');
-	
+
 	try {
-	    req.init();
+        req.init();
 	} catch (ReferenceError e) {
-	    // Do something
-	}
-	
-	req.send();
+        // Do something
+    }
+
+    req.send();
 } catch (Error e) {
-	// Do something
+    // Do something
 }
 ```
 
