@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <title>JHRW - Request Tester</title>
+        <link rel="stylesheet" href="style/requestTester.css">
+    </head>
+    <body>
+        <main>
+            <form>
+                <div>
+                    <label>Base: </label>
+                    <input type="text" name="base" size="32">
+                </div>
+                <div>
+                    <label>Path: </label>
+                    <input type="text" name="path" size="32" value="/example/requestTester.php">
+                </div>
+                <div>
+                    <label for="async">
+                        <input type="checkbox" checked name="async" id="async" value="true">
+                        Asynchronous
+                    </label>
+                    <label for="overrideCache">
+                        <input type="checkbox" checked name="overrideCache" id="overrideCache" value="true">
+                        Override Cache
+                    </label>
+                </div>
+                <div>
+                    <label>Verb: </label>
+                    <select name="verb">
+                        <option selected value="get">GET</option>
+                        <option value="post">POST</option>
+                        <option value="put">PUT</option>
+                        <option value="delete">DELETE</option>
+                        <option value="head">HEAD</option>
+                        <option value="connect">CONNECT</option>
+                        <option value="options">OPTIONS</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Attempts: </label>
+                    <input type="number" name="attempts" min="1" max="30" value="1">
+                    <label>Interval: </label>
+                    <input type="number" name="interval" min="1" max="10" value="3">seconds
+                </div>
+                <div>
+                    <label>Timeout: </label>
+                    <input type="number" name="timeout" min="1" max="10" value="3">seconds
+                </div>
+
+                <div>
+                    <button type="button">Send</button>
+                </div>
+            </form>
+        </main>
+        <script type="text/javascript" src="../JHRW.js"></script>
+        <script type="text/javascript">
+        console.clear();
+
+        f = document.forms[0];
+        d = parent.frames['results'];
+
+        f.base.value = document.location.origin;
+
+        document.querySelector('button').onclick =  function () {
+            this.blur();
+
+            try {
+                reqObject = new JHRW(f.base.value, f.path.value, false, f.overrideCache.checked);
+
+                try {
+                    reqObject.configure({
+                        'asynchronous'   : f.async.checked,
+                        'verb'           : f.verb.value,
+                        'requestType'    : 'application/x-www-form-urlencoded',
+                        'responseType'   : 'text/plain',
+                        'attempts'       : parseInt(f.attempts.value),
+                        'attemptInterval': parseInt(f.interval.value),
+                        'timeout'        : parseInt(f.timeout.value),
+                        'requestHeaders' : {
+                            'Accept': 'application/json'
+                        },
+                        'handlers': {
+                            'loadstart': function () {
+                                d.contentDocument.querySelector('main').innerHTML+= '<br>Loading Attempt #' + reqObject.attempts + ' has started.<br>';
+                            },
+                            'load': function () {
+                                reqObject.end();
+                                d.contentDocument.querySelector('main').innerHTML += this.response;
+                                d.contentDocument.querySelector('main').innerHTML += '<br>Stopped.';
+                            },
+                        },
+                        'postTimeout': function () {
+                            d.contentDocument.querySelector('main').innerHTML += '<br>Attempt #' + reqObject.attempts + ' timed out.';
+                        }
+                    });
+
+                    try {
+                        reqObject.init();
+                        reqObject.send();
+                    } catch (re2) {
+                        alert('Init error: ' + re2.message);
+                    }
+                } catch (re1) {
+                    alert('Configuration error: ' + re1.message);
+                }
+            } catch (e) {
+                alert('Error: ' + e.message);
+            }
+        };
+
+        /**
+        * An example handler
+        */
+
+        function JHRWHandler(event)
+        {
+            if (event.type === 'error') {
+                alert('There was an error on the request.');
+            } else if (event.type === 'load') {
+                if (this.status === 200) {
+                    console.log(this.response);
+                } else {
+                    alert('Returned status: ' + this.status + '(' + this.statusText + '); Possible error.');
+                }
+            }
+        }
+        </script>
+    </body>
+</html>
