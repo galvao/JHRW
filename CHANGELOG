@@ -1,0 +1,27 @@
+# CHANGELOG
+
+## [2.0.0] - 2020-04-15
+
+### Added
+- A default timeout handler.
+- The postTimeout configuration, meaning a callback to be executed after the default timout handler.
+- The bypassCache parameter to the constructor.
+- Object's properties list at the beginning of the class.
+- The @version tag in code documentation
+- This CHANGELOG.
+
+### Changed
+- There must be a function named 'JHRWHandler' to handle JHRW. The changing in name (previously 'defaultHandler') was done to prevent naming conflicts.
+- The example handler (see above) now resides on the testing script, as it should.
+- Timeouts are now explicitly handled by JHRW and therefore can't be configured anymore. See postTimeout above.
+- The request is now created by the init method.
+- The example tester is now more sophisticated, allowing for better testing.
+- availableHandlers is now a static property.
+- The project is now licensed under MIT (no big deal, I'm just standardizing my projects under the same license).
+- Overall revamped documentation (README.md).
+- JHRW now has a 'base' parameter and a 'urlPath' parameter, instead of the unified - and wrong - 'destination' parameter.
+- All "timed" configurations (e.g.: ''timeout') are now handled in seconds.
+
+### Fixed
+- JHRW now correctly detects and retries timed out requests.
+- The configure method documentation now states that it's parameter should be an Object (not JSON, since JSON doesn\'t allow functions).

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <title>JHRW - Request Tester</title>
+        <link rel="stylesheet" href="style/requestTester.css">
+    </head>
+    <body>
+        <script type="text/javascript" src="../JHRW.js"></script>
+        <script type="text/javascript" src="../example/eTestParams.js"></script>
+        <script type="text/javascript">
+        console.clear();
+
+        function defaultHandler()
+        {
+        }
+
+        try {
+            to = new JHRW('http://jhrw', '/example/requestTester.php', undefined, undefined);
+        } catch (error) {
+            console.log(error);
+        }
+        /*baseCount  = etBaseParams.length;
+        pathCount  = etPathParams.length;
+        lazyCount  = etLazyParams.length;
+        cacheCount = etCacheParams.length;
+
+
+        for (i = 0; i < 100; i++) {
+            msg = 'Test #' + i + ': ';
+
+            rb = Math.floor(Math.random() * baseCount);
+            rp = Math.floor(Math.random() * pathCount);
+            rl = Math.floor(Math.random() * lazyCount);
+            rc = Math.floor(Math.random() * cacheCount);
+
+            pb = etBaseParams[rb];
+            pp = etPathParams[rp];
+            pl = etLazyParams[rl];
+            pc = etCacheParams[rc];
+
+            tb = typeof pb;
+            tp = typeof pp;
+            tl = typeof pl;
+            tc = typeof pc;
+
+            msg += '( ' + tb + ', ' + tp + ', ' + tl + ', ' + tc + ' )';
+            console.log(msg);
+
+            console.log('( ' +pb + ', ' + pp + ', ' + pl + ', ' + pc + ' )');
+
+            try {
+                to = new JHRW(pb, pp, pl, pc);
+                console.log('Test OK');
+            } catch (error) {
+                console.log(error);
+            }
+        }*/
+        </script>
+    </body>
+</html>

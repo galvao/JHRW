@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Post Example</title>
+    </head>
+    <body>
+        <script type="text/javascript" src="../JHRW.js"></script>
+        <script type="text/javascript">
+            request = new JHRW('/example/post.php', false);
+            try {
+                request.configure({
+                    "verb": "post",
+                    "requestHeaders": {
+                        "Content-Type": "application/json"
+                    },
+                    "data": JSON.stringify({
+                        "to":      "foo",
+                        "cc":      "bar",
+                        "bcc":     "baz",
+                        "subject": "quux",
+                        "msg":     "bernard"
+                    })
+                });
+            } catch(e) {
+                alert('Configuration error: ' + e.message);
+            }
+
+            request.init();
+            request.send();
+        </script>

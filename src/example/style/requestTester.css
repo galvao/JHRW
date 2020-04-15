@@ -1,0 +1,33 @@
+body {
+    margin-top: 5px;
+    margin-left: 5px;
+    font-family: sans-serif;
+}
+
+iframe {
+    width: 49%;
+    height: 620px;
+}
+
+iframe, input, select, button {
+    border: 1px solid #000;
+    border-radius: 15px;
+    background-color: #fff;
+}
+
+label, input, select, button {
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 5px;
+    font-size: 16pt;
+    padding: 10px;
+}
+
+input[type=number] {
+    text-align: right;
+    width: 60px;
+}
+
+button {
+    width: 600px;
+}
